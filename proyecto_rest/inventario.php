@@ -49,7 +49,7 @@ switch($_SERVER['REQUEST_METHOD']){
             );
             try{
                 $reg = $productos->create($datos);
-                $res = array("result"=>"ok","msg"=>"Se guardo el tema", "id"=>$reg);
+                $res = array("result"=>"ok","msg"=>"Se guardo el producto en inventario", "id"=>$reg);
             }catch(PDOException $e){
                 $res = array("result"=>"no","msg"=>$e->getMessage());
             }
@@ -68,7 +68,7 @@ switch($_SERVER['REQUEST_METHOD']){
             $datos = array('nombre'=>$_GET['nombre'],'nombre'=>$_GET['nombre'],'cant_total'=>$_GET['cant_total'],'cant_actual'=>$_GET['cant_actual']);
             $reg = $productos->update($datos,$where);
 
-            $res = array("result"=>"ok","msg"=>"Se guardo el tema", "num"=>$reg);
+            $res = array("result"=>"ok","msg"=>"Se guardo el producto", "num"=>$reg);
         
         }else{
             $res = array("result"=>"no","msg"=>"Faltan datos");
@@ -81,7 +81,7 @@ switch($_SERVER['REQUEST_METHOD']){
             $productos = new DataBase('inventario');
             $where = array('id_producto'=>$_GET['id']);
             $reg = $productos->delete($where);
-            $res = array("result"=>"ok","msg"=>"Se elimino el tema", "num"=>$reg);
+            $res = array("result"=>"ok","msg"=>"Se elimino el producto", "num"=>$reg);
         
         }else{
             $res = array("result"=>"no","msg"=>"Faltan datos");
