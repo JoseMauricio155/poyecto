@@ -1,1 +1,79 @@
-<p>inventario works!</p>
+<nav class="navbar sticky-top navbar-expand-lg navbar-dark bg-dark">
+    <span class="navbar-brand">Tienda</span>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+        aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
+            <li class="nav-item"><a class="nav-link" routerLink="/inicio">Inicio</a></li>
+            <li class="nav-item"><a class="nav-link" routerLink="/Inventario">Inventario</a></li>
+            <li class="nav-item" *ngIf="level=='A'"><a class="nav-link" routerLink="/usuarios">Usuarios</a></li>
+            <li class="nav-item"><a class="nav-link" (click)="salir()" href="">Salir</a></li>
+        </ul>
+        <span class="navbar-text border border-dark rounded pl-2 pr-2">
+            {{user}}
+        </span>
+        
+    </div>
+</nav>
+
+<div class="container rounded border mb-3 shadow bg-white">
+    <div class="row">
+        <div class="col"></div>
+        <div class="col m-3">
+            <div class="card" style="width: 18rem;" ng-cloak>
+                <div class="card-header">
+                    {{inventa}}
+                </div>
+                <div class="card-body">
+                    <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+                            <div class="input-group-text"><i class="fas fa-user"></i></div>
+                        </div>
+                        <input type="text" class="form-control" id="user" 
+                        placeholder="Id del producto" [(ngModel)]="user">  <button type="button" class="btn btn-primary" id="Entrar" (click)="entrar()">Buscar</button>
+                    </div>
+                    <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+                            <div class="input-group-text"><i class="fas fa-key"></i></div>
+                        </div>
+                        <input type="text" class="form-control" id="user" 
+                        placeholder="Nombre del producto" [(ngModel)]="user">
+                    </div>
+                    <div class="input-group">
+                        <div class="input-group-prepend">
+                            <div class="input-group-text"><i class="fas fa-key"></i></div>
+                        </div>
+                        <input type="text" class="form-control" id="user" 
+                        placeholder="Cantidad Actual" [(ngModel)]="user">
+                    </div>
+                </div>
+                <div class="card-footer text-center">
+                    <button type="button" class="btn btn-primary" id="Agregar" (click)="entrar()">Agregar</button>
+                </div>
+            </div>
+        </div>
+        <div class="col"></div>
+    </div>
+    <div class="row">
+        <div class="col">
+            <table class="table table-hover table-dark">
+                <thead>
+                    <tr>
+                        <th>Id producto</th>
+                        <th>Nombre del producto</th>
+                        <th>Cantidad Inicial</th>
+                        <th>Cantidad Actual</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                  
+                </tbody>
+            </table>
+        </div>
+    </div>
+    
+</div>
