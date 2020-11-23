@@ -31,6 +31,7 @@ constructor(private datos:DatosServiceService, private router:Router, private ms
     })
   }
   agregarProducto(){
+    this.nuevoProd.cant_actual=this.nuevoProd.cant_total;
     if(this.nuevoProd.id_producto == '' && this.nuevoProd.nombre == ''&& this.nuevoProd.cant_actual == ''&& this.nuevoProd.cant_total == ''){
       this.msg.error("Los campos Id, Nombre del Producto,cant_total son obligatorios");
       return;
@@ -57,7 +58,7 @@ constructor(private datos:DatosServiceService, private router:Router, private ms
   guardarCambios(){
     this.datos.putProductos(this.tmpProd).subscribe(resp => {
       if(resp['result']=='ok'){
-        let i = this.inventario.indexOf( this.inventario.find( producto => producto.id_prodructo == this.tmpProd.id_producto ));
+        let i = this.inventario.indexOf( this.inventario.find( producto => producto.id_producto == this.tmpProd.id_producto ));
         this.inventario[i].nombre = this.tmpProd.nombre;
         this.inventario[i].cant_total = this.tmpProd.cant_total;
         this.inventario[i].cant_actual = this.tmpProd.cant_actual;
