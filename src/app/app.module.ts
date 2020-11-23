@@ -1,5 +1,12 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { HttpClientModule } from '@angular/common/http';
+import { RouterModule, Route} from '@angular/router';
+import { CookieService } from 'ngx-cookie-service';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { ToastrModule } from 'ngx-toastr';
+import { CKEditorModule } from 'ngx-ckeditor';
 
 import { AppComponent } from './app.component';
 import { LoginComponent } from './login/login.component';
@@ -8,7 +15,16 @@ import { UsuariosComponent } from './usuarios/usuarios.component';
 import { HeaderComponent } from './header/header.component';
 import { FooterComponent } from './footer/footer.component';
 import { MenuComponent } from './menu/menu.component';
+import { SeguridadGuard } from './seguridad.guard';
+import { DatosServiceService } from './datos-service.service';
 
+const rutas: Route[] = [
+  {path:'', component: LoginComponent},
+  {path:'inicio', component: LoginComponent, canActivate: [SeguridadGuard]},
+  {path:'inventario', component: InventarioComponent, canActivate: [SeguridadGuard]},
+  {path:'usuarios', component: UsuariosComponent, canActivate: [SeguridadGuard]},
+  {path:'*', component: LoginComponent}
+]
 @NgModule({
   declarations: [
     AppComponent,
@@ -20,9 +36,16 @@ import { MenuComponent } from './menu/menu.component';
     MenuComponent
   ],
   imports: [
-    BrowserModule
+    BrowserModule,
+    FormsModule,
+    HttpClientModule,
+    RouterModule.forRoot(rutas),
+    ReactiveFormsModule,
+    BrowserAnimationsModule,
+    ToastrModule.forRoot(),
+    CKEditorModule
   ],
-  providers: [],
+  providers: [DatosServiceService, SeguridadGuard, CookieService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

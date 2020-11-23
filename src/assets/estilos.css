@@ -1,7 +1,21 @@
 body {
     font-family: Arial, Helvetica, sans-serif;
     margin: 0;
-   background: url(fondo.jpg);
+   background: url(kkk.jpg);
+    background-size: contain;
+    background-attachment: fixed;
+}
+header{
+    font-family: Arial, Helvetica, sans-serif;
+    margin: 0;
+   background: url(lll.jpg);
+    background-size: contain;
+    background-attachment: fixed;
+}
+footer{
+    font-family: Arial, Helvetica, sans-serif;
+    margin: 0;
+   background: url(lll.jpg);
     background-size: contain;
     background-attachment: fixed;
 }
@@ -20,7 +34,7 @@ body {
 h1{
     text-align: center;
     color: #1a2537;
-    font-size: 40px;
+    font-size: 20px;
 }
 input[type="text"],
 input[type="password"]{

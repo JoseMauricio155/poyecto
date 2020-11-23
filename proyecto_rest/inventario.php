@@ -38,7 +38,7 @@ switch($_SERVER['REQUEST_METHOD']){
         echo json_encode($res);
     break;
     case "POST":
-        if(isset($_GET['id'])&& isset($_GET['nombre'])&& isset($_GET['cant_total'])&& isset($_GET['cant_actual'])){
+        if(isset($_POST['id'])&& isset($_POST['nombre'])&& isset($_POST['cant_total'])&& isset($_POST['cant_actual'])){
             
             $productos = new DataBase('inventario');
             $datos = array(

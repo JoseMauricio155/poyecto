@@ -1,57 +1,49 @@
-<nav class="navbar sticky-top navbar-expand-lg navbar-dark bg-dark">
-    <span class="navbar-brand">Tienda</span>
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
-        aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-    </button>
-
-    <div class="collapse navbar-collapse" id="navbarSupportedContent">
-        <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
-            <li class="nav-item"><a class="nav-link" routerLink="/inicio">Inicio</a></li>
-            <li class="nav-item"><a class="nav-link" routerLink="/Inventario">Inventario</a></li>
-            <li class="nav-item" *ngIf="level=='A'"><a class="nav-link" routerLink="/usuarios">Usuarios</a></li>
-            <li class="nav-item"><a class="nav-link" (click)="salir()" href="">Salir</a></li>
-        </ul>
-        <span class="navbar-text border border-dark rounded pl-2 pr-2">
-            {{user}}
-        </span>
-        
-    </div>
-</nav>
-
-<div class="container rounded border mb-3 shadow bg-white">
+<app-menu></app-menu>
+<div class="container">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css" >
     <div class="row">
         <div class="col"></div>
-        <div class="col m-3">
-            <div class="card" style="width: 18rem;" ng-cloak>
+        <div class="col">
+            <div class="card" style="width: 18rem;">
                 <div class="card-header">
-                    {{inventa}}
+                    Nuevo Producto
                 </div>
                 <div class="card-body">
                     <div class="input-group mb-3">
                         <div class="input-group-prepend">
-                            <div class="input-group-text"><i class="fas fa-user"></i></div>
+                            <div class="input-group-text">Id:</div>
                         </div>
-                        <input type="text" class="form-control" id="user" 
-                        placeholder="Id del producto" [(ngModel)]="user">  <button type="button" class="btn btn-primary" id="Entrar" (click)="entrar()">Buscar</button>
+                        <!--Cuadro de texto para agregar idtema-->
+                        <input type="text" class="form-control" id="id_producto" placeholder="Id producto"
+                            [(ngModel)]="nuevoProd.id_producto">
                     </div>
                     <div class="input-group mb-3">
                         <div class="input-group-prepend">
-                            <div class="input-group-text"><i class="fas fa-key"></i></div>
+                            <div class="input-group-text">Nombre:</div>
                         </div>
-                        <input type="text" class="form-control" id="user" 
-                        placeholder="Nombre del producto" [(ngModel)]="user">
+                         <!--Cuadro de texto para agregar el nombre del tema-->
+                        <input type="text" class="form-control" id="nombre" placeholder="Nombre del producto"
+                            [(ngModel)]="nuevoProd.nombre">
                     </div>
-                    <div class="input-group">
+                    <div class="input-group mb-3">
                         <div class="input-group-prepend">
-                            <div class="input-group-text"><i class="fas fa-key"></i></div>
+                            <div class="input-group-text">Cantidad total:</div>
                         </div>
-                        <input type="text" class="form-control" id="user" 
-                        placeholder="Cantidad Actual" [(ngModel)]="user">
+                         <!--Cuadro de texto para agregar el nombre del tema-->
+                        <input type="text" class="form-control" id="cant_total" placeholder="Cantidad total"
+                            [(ngModel)]="nuevoProd.cant_total">
+                    </div>
+                    <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+                            <div class="input-group-text">Cantidad actual:</div>
+                        </div>
+                         <!--Cuadro de texto para agregar el nombre del tema-->
+                        <input type="text" class="form-control" id="cant_actual" placeholder="Cantidad actual"
+                            [(ngModel)]="nuevoProd.cant_actual">
                     </div>
                 </div>
                 <div class="card-footer text-center">
-                    <button type="button" class="btn btn-primary" id="Agregar" (click)="entrar()">Agregar</button>
+                    <button type="button" class="btn btn-primary" id="entrar" (click)="agregarProducto()">Agregar</button>
                 </div>
             </div>
         </div>
@@ -62,18 +54,103 @@
             <table class="table table-hover table-dark">
                 <thead>
                     <tr>
-                        <th>Id producto</th>
-                        <th>Nombre del producto</th>
-                        <th>Cantidad Inicial</th>
-                        <th>Cantidad Actual</th>
+                        <th>Id</th>
+                        <th>Nombre</th>
+                        <th>Cantidad total</th>
+                        <th>Cantidad actual</th>
                         <th></th>
                     </tr>
                 </thead>
                 <tbody>
-                  
+                    <tr *ngFor="let producto of inventario">
+                        <td>{{producto.id_producto}}</td>
+                        <td >{{producto.nombre}}</td>
+                        <td >{{producto.cant_total}}</td>
+                        <td >{{producto.cant_actual}}</td>
+                        <td class="text-right">
+                            <button class="btn btn-primary btn-sm" *ngIf="level=='A'"
+                                (click)="temporalProducto(producto)" data-toggle='modal' data-target='#modalEditar'><i class="fas fa-pen"></i></button>
+                            &nbsp;
+                            <button class="btn btn-danger btn-sm" *ngIf="level=='A'"
+                                (click)="temporalProducto(producto)" data-toggle='modal' data-target='#modalEliminar'><i class="fas fa-trash"></i></button>
+                                
+                            </td>
+                    </tr>
                 </tbody>
             </table>
         </div>
     </div>
-    
+</div>
+
+<!-- Modal Para Editar -->
+<div class="modal fade" id="modalEditar" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle"
+    aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLongTitle">Modificar Producto</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+                        <div class="input-group-text">Id:</div>
+                    </div>
+                    <input type="text" class="form-control" id="idTemaEditar" placeholder="Id del tema"
+                        [(ngModel)]="tmpProd.id_producto" disabled>
+                </div>
+                <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+                        <div class="input-group-text">Nombre:</div>
+                    </div>
+                    <input type="text" class="form-control" id="nombreTemaEditar" placeholder="Nombre del tema"
+                        [(ngModel)]="tmpProd.nombre">
+                </div>
+                <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+                        <div class="input-group-text">Cantidad total:</div>
+                    </div>
+                    <input type="text" class="form-control" id="cantidadTTemaEditar" placeholder="cantidad total"
+                        [(ngModel)]="tmpProd.cant_total">
+                </div>
+                <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+                        <div class="input-group-text">Cantidad actual:</div>
+                    </div>
+                    <input type="text" class="form-control" id="cantidadATemaEditar" placeholder="Nombre del tema"
+                        [(ngModel)]="tmpProd.cant_actual">
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                <button type="button" class="btn btn-primary" data-dismiss="modal"
+                    (click)="guardarCambios()">Guardar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal Para Eliminar -->
+<div class="modal fade" id="modalEliminar" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle"
+    aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLongTitle">Eliminar Producto</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <p>¿Esta seguro que quiere eliminar el producto {{tmpProd.nombre}}?</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">No</button>
+                <button type="button" class="btn btn-danger" data-dismiss="modal"
+                    (click)="confirmarEliminar()">Si</button>
+            </div>
+        </div>
+    </div>
 </div>

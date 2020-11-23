@@ -1,35 +1,46 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-   <script src="../../assets/estilos.css"></script>
-   <script src="../../assets/fondo.jpg"></script>
-    
-    <title>Document</title>
-</head>
+<nav class="navbar sticky-top navbar-expand-lg navbar-dark bg-dark">
+    <span class="navbar-brand">
+        <i class="fas fa-blog"></i>
+        Login
+    </span>
+</nav>
 <body>
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css" >
     <link rel="stylesheet" href="../../assets/estilos.css">
-    <form class="formulario">
-        <h1>Login</h1>
-         <div class="contenedor"> 
-             <div class="input-contenedor">
-             <i class="fas fa-envelope icon"></i>
-             <input type="text" placeholder="Correo Electronico">
-             
-             </div>
-             
-             <div class="input-contenedor">
-            <i class="fas fa-key icon"></i>
-             <input type="password" placeholder="Contraseña">
-             
-             </div>
-             <input type="submit" value="Login" class="button">
-             <p>Al registrarte, aceptas nuestras Condiciones de uso y Política de privacidad.</p>
-             <p>¿No tienes una cuenta? <a class="link" href="registrarvista.html">Registrate </a></p>
-         </div>
-        </form>
+<div class="contenedor">
     
+        <div class="row">
+            <div class="col"></div>
+            <div class="col">
+                <div class="card" style="width: 18rem;" ng-cloak>
+                    <div class="card-header">
+                        <p>{{inicio}}</p>
+                    </div>
+                    <div class="card-body">
+                        <div class="input-group mb-3 input-contenedor">
+                            <div class="input-group-prepend">
+                                <div class="input-group-text"><i class="fas fa-user"></i></div>
+                            </div>
+                            <input type="text" class="form-control" id="user" 
+                            placeholder="Nombre de usuario" [(ngModel)]="user">
+                            
+                        </div>
+                        <div class="input-group input-contenedor">
+                            <div class="input-group-prepend">
+                                <div class="input-group-text"><i class="fas fa-key"></i></div>
+                            </div>
+                            <input type="password" class="form-control" id="password" 
+                            placeholder="Contraseña" [(ngModel)]="password">
+                        
+                        </div>
+                    </div>
+                    <div class="card-footer text-center">
+                        <input type="submit" value="Login" (click)="entrar()" id="entrar" class="button" >
+                    </div>
+                </div>
+            </div>
+            <div class="col"></div>
+        </div>
+    
+</div>
 </body>
-</html>
