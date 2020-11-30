@@ -17,12 +17,14 @@ import { FooterComponent } from './footer/footer.component';
 import { MenuComponent } from './menu/menu.component';
 import { SeguridadGuard } from './seguridad.guard';
 import { DatosServiceService } from './datos-service.service';
+import { OperacionComponent } from './operacion/operacion.component';
 
 const rutas: Route[] = [
   {path:'', component: LoginComponent},
   {path:'inicio', component: LoginComponent, canActivate: [SeguridadGuard]},
   {path:'inventario', component: InventarioComponent, canActivate: [SeguridadGuard]},
   {path:'usuarios', component: UsuariosComponent, canActivate: [SeguridadGuard]},
+  {path:'operacion', component: OperacionComponent, canActivate: [SeguridadGuard]},
   {path:'*', component: LoginComponent}
 ]
 @NgModule({
@@ -33,7 +35,8 @@ const rutas: Route[] = [
     UsuariosComponent,
     HeaderComponent,
     FooterComponent,
-    MenuComponent
+    MenuComponent,
+    OperacionComponent
   ],
   imports: [
     BrowserModule,

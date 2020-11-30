@@ -62,10 +62,10 @@
                 </thead>
                 <tbody>
                     <tr *ngFor="let producto of inventario">
-                        <td>{{producto.id_producto}}</td>
-                        <td >{{producto.nombre}}</td>
-                        <td >{{producto.cant_total}}</td>
-                        <td >{{producto.cant_actual}}</td>
+                        <td (click)="verOperacion(producto)">{{producto.id_producto}}</td>
+                        <td (click)="verOperacion(producto)">{{producto.nombre}}</td>
+                        <td (click)="verOperacion(producto)">{{producto.cant_total}}</td>
+                        <td (click)="verOperacion(producto)">{{producto.cant_actual}}</td>
                         <td class="text-right">
                             <button class="btn btn-primary btn-sm" *ngIf="level=='A'"
                                 (click)="temporalProducto(producto)" data-toggle='modal' data-target='#modalEditar'><i class="fas fa-pen"></i></button>
@@ -74,11 +74,8 @@
                                 (click)="temporalProducto(producto)" data-toggle='modal' data-target='#modalEliminar'><i class="fas fa-trash"></i></button>
                                 &nbsp;
                             <button class="btn btn-success btn-sm" *ngIf="level=='A'" 
-                        (click)="temporalProducto(producto)" data-toggle='modal' data-target='#modalAgregar'>Comprar <i class="fas fa-shopping-basket"></i></button>
-                        &nbsp;
-                        <button class="btn btn-info btn-sm"  
-                        (click)="temporalProducto(producto)" data-toggle='modal' data-target='#modalvender'>Vender<i class="fas fa-hand-holding-usd"></i></button>
-                            </td>
+                        (click)="temporalProducto(producto)" data-toggle='modal' data-target='#modalOpera'>Operaciones <i class="fas fa-archway"></i></button>
+                         </td>
                         
                     </tr>
                 </tbody>
@@ -155,6 +152,62 @@
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">No</button>
                 <button type="button" class="btn btn-danger" data-dismiss="modal"
                     (click)="confirmarEliminar()">Si</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Modal Para Editar -->
+<div class="modal fade" id="modalOpera" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle"
+    aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLongTitle">Producto entrante o saliente</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+                        <div class="input-group-text">Id:</div>
+                    </div>
+                    <input type="text" class="form-control" id="idTemaEditar" placeholder="Id del tema"
+                        [(ngModel)]="tmpProd.id_producto" disabled>
+                </div>
+                <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+                        <div class="input-group-text">Nombre:</div>
+                    </div>
+                    <input type="text" class="form-control" id="nombreTemaEditar" placeholder="Nombre del tema"
+                        [(ngModel)]="tmpProd.nombre" disabled>
+                </div>
+                <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+                        <div class="input-group-text">Cantidad total:</div>
+                    </div>
+                    <input type="text" class="form-control" id="cantidadTTemaEditar" placeholder="cantidad total"
+                        [(ngModel)]="tmpProd.cant_total" disabled>
+                </div>
+                <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+                        <div class="input-group-text">Cantidad actual:</div>
+                    </div>
+                    <input type="text" class="form-control" id="cantidadATemaEditar" placeholder="Nombre del tema"
+                        [(ngModel)]="tmpProd.cant_actual" disabled>
+                </div>
+                <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+                        <div class="input-group-text">Cantidad:</div>
+                    </div>
+                    <input type="text" class="form-control" id="cantidadATemaEditar" placeholder="Nombre del tema"
+                        [(ngModel)]="productoES">
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger" data-dismiss="modal" (click)="guardarCambiosSaliente()">Producto saliente</button>
+                <button type="button" class="btn btn-primary" data-dismiss="modal"
+                    (click)="guardarCambiosEntrar()">Producto entrante</button>
             </div>
         </div>
     </div>

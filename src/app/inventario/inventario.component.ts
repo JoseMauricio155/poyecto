@@ -10,10 +10,13 @@ import { ToastrService } from 'ngx-toastr';
 })
 export class InventarioComponent implements OnInit {
 inventa= "Inventario";
+productoES=0;
 inventario:any;
 level:String;
+nuevaOpera:any={id_producto:'',tipo:'',Cantidad:''};
 nuevoProd={id_producto:'',nombre:'',cant_total:'',cant_actual:''};
-tmpProd={id_producto:'',nombre:'',cant_total:'',cant_actual:''}; 
+tmpProd:any={id_producto:'',nombre:'',cant_total:'',cant_actual:''}; 
+operaa:any;
 constructor(private datos:DatosServiceService, private router:Router, private msg:ToastrService) { }
 
   ngOnInit(): void {
@@ -71,6 +74,87 @@ constructor(private datos:DatosServiceService, private router:Router, private ms
     });
   }
 
+
+  agregarOperacion(tipo,cant){
+    
+   this.nuevaOpera.id_producto=this.tmpProd.id_producto;
+   this.nuevaOpera.Cantidad=cant;
+   this.nuevaOpera.tipo=tipo;
+
+    this.datos.postoperaciones(this.nuevaOpera).subscribe(resp => {
+      if(resp['result']=='ok'){
+        let opera = JSON.parse(JSON.stringify(this.nuevaOpera))
+        this.operaa.push(opera);
+        this.nuevaOpera.id_producto = '';
+        this.nuevaOpera.Cantidad = '';
+        this.nuevaOpera.tipo = '';
+        this.msg.success("La operacion se guardo correctamente.");
+      }else{
+        this.msg.error("El operacion no se ha podido guardar.");
+      }
+    }, error => {
+      console.log(error);
+    });
+  }
+
+  guardarCambiosEntrar(){
+    
+  var actual=Number(this.tmpProd.cant_actual)+Number(this.productoES);
+  var total=Number(this.tmpProd.cant_total)+Number(this.productoES);
+  var tipo="Producto entrante";
+  this.agregarOperacion(tipo,actual);
+  this.tmpProd.cant_actual=Number(this.productoES);
+  this.tmpProd.cant_total=total;
+    this.datos.putProductos(this.tmpProd).subscribe(resp => {
+      if(resp['result']=='ok'){
+        let i = this.inventario.indexOf( this.inventario.find( producto => producto.id_producto == this.tmpProd.id_producto ));
+        this.inventario[i].nombre = this.tmpProd.nombre;
+        this.inventario[i].cant_total = this.tmpProd.cant_total;
+        this.inventario[i].cant_actual = this.tmpProd.cant_actual;
+       // this.msg.success("El Producto se guardo correctamente.");
+      }else{
+       // this.msg.error("El Producto no se ha podido guardar.");
+      }
+    }, error => {
+      console.log(error);
+    });
+
+
+    
+  }
+
+
+
+
+
+  verOperacion(producto){
+    this.datos.setProdActivo(producto.id_producto);
+    this.router.navigate(['/operacion']);
+  }
+  guardarCambiosSaliente(){
+    var totalProd=Number(this.tmpProd.cant_actual);
+    
+    if((totalProd-this.productoES)>0){
+      var tipo="Producto Saliente";
+      this.tmpProd.cant_actual=totalProd-this.productoES;
+      this.agregarOperacion(tipo,this.tmpProd.cant_actual);
+    this.datos.putProductos(this.tmpProd).subscribe(resp => {
+      if(resp['result']=='ok'){
+        let i = this.inventario.indexOf( this.inventario.find( producto => producto.id_producto == this.tmpProd.id_producto ));
+        this.inventario[i].nombre = this.tmpProd.nombre;
+        this.inventario[i].cant_total = this.tmpProd.cant_total;
+        this.inventario[i].cant_actual = this.tmpProd.cant_actual;
+        //this.msg.success("El Producto se guardo correctamente.");
+      }else{
+        this.msg.error("El Producto no se ha podido guardar.");
+      }
+    }, error => {
+      console.log(error);
+    });
+    }else{
+      this.msg.error("No hay suficiente producto")
+    }
+  }
   confirmarEliminar(){
     this.datos.deleteProductos(this.tmpProd).subscribe(resp => {
       if(resp['result']=='ok'){

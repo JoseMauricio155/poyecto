@@ -9,6 +9,7 @@ const URL:string = "http://localhost/poyecto/proyecto_rest/";
   providedIn: 'root'
 })
 export class DatosServiceService {
+  private id_producto:any;
   private cuenta = {user:"", token:"", level:""}
   constructor(private http: HttpClient, private galleta:CookieService) { }
   getCuenta(){
@@ -16,6 +17,19 @@ export class DatosServiceService {
     this.cuenta.token = this.galleta.get('token');
     this.cuenta.level = this.galleta.get('level');
     return this.cuenta;
+  }
+
+  getProdActivo(){
+    this.id_producto = sessionStorage.getItem("id_producto");
+
+    return this.id_producto;
+  }
+
+  setProdActivo(id_producto){
+    this.id_producto = id_producto;
+    
+    sessionStorage.setItem("id_producto", id_producto);
+    
   }
   setCuenta(user,token,nivel){
     this.cuenta.user = user;
@@ -38,6 +52,7 @@ export class DatosServiceService {
     
     return this.http.get(URL + "inventario.php", {headers:Headers});
   }
+  
   //localstorage en cache de navegador
   //session mientras no se cierre
 
@@ -114,5 +129,20 @@ export class DatosServiceService {
 
     return this.http.delete(URL + "usuarios.php", {headers: Headers, params: Params});
   }
-  
+  //Operaciones de entrada y salida de producto
+  getOperacion(){
+    let Headers = new HttpHeaders();
+    Headers = Headers.append('Authorization', this.cuenta.token);
+    
+    return this.http.get(URL + "operaciones.php", {headers:Headers});
+  }
+  postoperaciones(Producto){
+    let Headers = new HttpHeaders();
+    Headers = Headers.append('Authorization', this.cuenta.token);
+    let formData = new FormData();//Es para enviar los datos internamente y no por url
+    formData.append('id_producto', Producto.id_producto);
+    formData.append('tipo', Producto.tipo);
+    formData.append('cantidad', Producto.cantidad);
+    return this.http.post(URL + "operaciones.php", formData, {headers:Headers});
+  }
 }
