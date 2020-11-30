@@ -62,10 +62,10 @@
                 </thead>
                 <tbody>
                     <tr *ngFor="let producto of inventario">
-                        <td (click)="verOperacion(producto)">{{producto.id_producto}}</td>
-                        <td (click)="verOperacion(producto)">{{producto.nombre}}</td>
-                        <td (click)="verOperacion(producto)">{{producto.cant_total}}</td>
-                        <td (click)="verOperacion(producto)">{{producto.cant_actual}}</td>
+                        <td >{{producto.id_producto}}</td>
+                        <td >{{producto.nombre}}</td>
+                        <td>{{producto.cant_total}}</td>
+                        <td >{{producto.cant_actual}}</td>
                         <td class="text-right">
                             <button class="btn btn-primary btn-sm" *ngIf="level=='A'"
                                 (click)="temporalProducto(producto)" data-toggle='modal' data-target='#modalEditar'><i class="fas fa-pen"></i></button>
@@ -207,7 +207,7 @@
             <div class="modal-footer">
                 <button type="button" class="btn btn-danger" data-dismiss="modal" (click)="guardarCambiosSaliente()">Producto saliente</button>
                 <button type="button" class="btn btn-primary" data-dismiss="modal"
-                    (click)="guardarCambiosEntrar()">Producto entrante</button>
+                    (click)="guardarCambiosEntrante()">Producto entrante</button>
             </div>
         </div>
     </div>

@@ -13,7 +13,7 @@ inventa= "Inventario";
 productoES=0;
 inventario:any;
 level:String;
-nuevaOpera:any={id_producto:'',tipo:'',Cantidad:''};
+nuevaOpera:any={id_producto:'',tipo:'',cantidad:0};
 nuevoProd={id_producto:'',nombre:'',cant_total:'',cant_actual:''};
 tmpProd:any={id_producto:'',nombre:'',cant_total:'',cant_actual:''}; 
 operaa:any;
@@ -75,10 +75,10 @@ constructor(private datos:DatosServiceService, private router:Router, private ms
   }
 
 
-  agregarOperacion(tipo,cant){
+  agregarOperacion(tipo){
     
    this.nuevaOpera.id_producto=this.tmpProd.id_producto;
-   this.nuevaOpera.Cantidad=cant;
+   this.nuevaOpera.cantidad=this.productoES;
    this.nuevaOpera.tipo=tipo;
 
     this.datos.postoperaciones(this.nuevaOpera).subscribe(resp => {
@@ -97,31 +97,7 @@ constructor(private datos:DatosServiceService, private router:Router, private ms
     });
   }
 
-  guardarCambiosEntrar(){
-    
-  var actual=Number(this.tmpProd.cant_actual)+Number(this.productoES);
-  var total=Number(this.tmpProd.cant_total)+Number(this.productoES);
-  var tipo="Producto entrante";
-  this.agregarOperacion(tipo,actual);
-  this.tmpProd.cant_actual=Number(this.productoES);
-  this.tmpProd.cant_total=total;
-    this.datos.putProductos(this.tmpProd).subscribe(resp => {
-      if(resp['result']=='ok'){
-        let i = this.inventario.indexOf( this.inventario.find( producto => producto.id_producto == this.tmpProd.id_producto ));
-        this.inventario[i].nombre = this.tmpProd.nombre;
-        this.inventario[i].cant_total = this.tmpProd.cant_total;
-        this.inventario[i].cant_actual = this.tmpProd.cant_actual;
-       // this.msg.success("El Producto se guardo correctamente.");
-      }else{
-       // this.msg.error("El Producto no se ha podido guardar.");
-      }
-    }, error => {
-      console.log(error);
-    });
-
-
-    
-  }
+  
 
 
 
@@ -137,7 +113,35 @@ constructor(private datos:DatosServiceService, private router:Router, private ms
     if((totalProd-this.productoES)>0){
       var tipo="Producto Saliente";
       this.tmpProd.cant_actual=totalProd-this.productoES;
-      this.agregarOperacion(tipo,this.tmpProd.cant_actual);
+      this.agregarOperacion(tipo);
+    this.datos.putProductos(this.tmpProd).subscribe(resp => {
+      if(resp['result']=='ok'){
+        let i = this.inventario.indexOf( this.inventario.find( producto => producto.id_producto == this.tmpProd.id_producto ));
+        this.inventario[i].nombre = this.tmpProd.nombre;
+        this.inventario[i].cant_total = this.tmpProd.cant_total;
+        this.inventario[i].cant_actual = this.tmpProd.cant_actual;
+        //this.msg.success("El Producto se guardo correctamente.");
+      }else{
+        this.msg.error("El Producto no se ha podido guardar.");
+      }
+    }, error => {
+      console.log(error);
+    });
+    }else{
+      this.msg.error("No hay suficiente producto")
+    }
+  }
+
+  guardarCambiosEntrante(){
+    
+    
+    if((this.productoES)>0){
+      var tipo="Producto Saliente";
+      var totalProd=Number(this.tmpProd.cant_total)+Number(this.productoES);
+      var actual=Number(this.tmpProd.cant_actual)+Number(this.productoES);
+      this.tmpProd.cant_actual=totalProd;
+      this.tmpProd.cant_actual=actual;
+      this.agregarOperacion(tipo);
     this.datos.putProductos(this.tmpProd).subscribe(resp => {
       if(resp['result']=='ok'){
         let i = this.inventario.indexOf( this.inventario.find( producto => producto.id_producto == this.tmpProd.id_producto ));

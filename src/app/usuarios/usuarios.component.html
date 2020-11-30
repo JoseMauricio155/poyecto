@@ -30,8 +30,12 @@
                             <div class="input-group-text"><i class="fas fa-users-cog"></i></div>
                         </div>
                          <!--Cuadro de texto para agregar el tipo de usuario-->
-                        <input type="text" class="form-control" id="Tipo" placeholder="Tipo"
-                            [(ngModel)]="nuevoUsuario.tipo">
+                        <!-- <input type="text" class="form-control" id="Tipo" placeholder="Tipo"
+                            [(ngModel)]="nuevoUsuario.tipo"> -->
+                            <select [(ngModel)]='nuevoUsuario.tipo'>
+                                <option value='A'>Administrador</option>
+                                <option value='U'>Usuario</option>
+                           </select>
                     </div>
                     <div class="input-group mb-3">
                         <div class="input-group-prepend">
