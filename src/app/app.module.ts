@@ -18,6 +18,7 @@ import { MenuComponent } from './menu/menu.component';
 import { SeguridadGuard } from './seguridad.guard';
 import { DatosServiceService } from './datos-service.service';
 import { OperacionComponent } from './operacion/operacion.component';
+import { VentasComponent } from './ventas/ventas.component';
 
 const rutas: Route[] = [
   {path:'', component: LoginComponent},
@@ -25,6 +26,7 @@ const rutas: Route[] = [
   {path:'inventario', component: InventarioComponent, canActivate: [SeguridadGuard]},
   {path:'usuarios', component: UsuariosComponent, canActivate: [SeguridadGuard]},
   {path:'operacion', component: OperacionComponent, canActivate: [SeguridadGuard]},
+  {path:'ventas', component: VentasComponent, canActivate: [SeguridadGuard]},
   {path:'*', component: LoginComponent}
 ]
 @NgModule({
@@ -36,7 +38,8 @@ const rutas: Route[] = [
     HeaderComponent,
     FooterComponent,
     MenuComponent,
-    OperacionComponent
+    OperacionComponent,
+    VentasComponent
   ],
   imports: [
     BrowserModule,
