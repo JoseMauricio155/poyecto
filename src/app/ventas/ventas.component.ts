@@ -11,26 +11,30 @@ export class VentasComponent implements OnInit {
 
   inventa= "Inventario";
 productoES=0;
-inventario:any;
+inventario:any=[];
 level:String;
 nuevaOpera:any={id_producto:'',tipo:'',cantidad:0};
 nuevoProd={id_producto:'',nombre:'',cant_total:'',cant_actual:''};
 nuevoProdee:any={id_producto:'',nombre:'',cant_total:'',cant_actual:'',precio:''};
+nuevoProdeer:any={id_producto:'',nombre:'',cant_total:'',cant_actual:'',precio:''};
 tmpProd:any={id_producto:'',nombre:'',cant_total:'',cant_actual:''}; 
 operaa:any;
-id_proo:any;
+id_proo:any=[];
 constructor(private datos:DatosServiceService, private router:Router, private msg:ToastrService) { }
 
   ngOnInit(): void {
     this.level = this.datos.getCuenta().level;
-    this.llenarInventario();
+    //this.llenarInventario();
   }
   llenarInventario(){
     this.datos.getProductosventas(this.id_proo).subscribe(resp => {
-       this.nuevoProdee=resp;
+      
+      this.inventario.push((resp));
       console.log(resp);
       console.log("yeaaah");
       console.log("yeaaah");
+      console.log(this.inventario);
+      //console.log(this.nuevoProdee);
     }, error => {
       console.log("Neeel");
       console.log(error);

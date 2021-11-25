@@ -18,7 +18,8 @@
       <div class="col-4"><button type="button" class="btn btn-success" (click)="llenarInventario()">Agregar <i class="fas fa-shopping-cart"></i></button></div>
   </div>
   <br>
-<h3>{{nuevoProdee}}</h3>
+<h3>{{inventario}}</h3>
+
 
     
     <div class="row">
@@ -34,11 +35,11 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr>
-                        <td >{{nuevoProdee.id_producto}}</td>
-                        <td >{{nuevoProdee.nombre}}</td>
-                        <td>{{nuevoProdee.cant_total}}</td>
-                        <td >{{nuevoProdee.cant_actual}}</td>
+                  <tr *ngFor="let producto of inventario">
+                    <td >{{producto.id_producto}}</td>
+                    <td >{{producto.nombre}}</td>
+                    <td>{{producto.cant_total}}</td>
+                    <td >{{producto.cant_actual}}</td>
                         <td class="text-right">
                             <button class="btn btn-primary btn-sm" *ngIf="level=='A'"
                                 (click)="temporalProducto(producto)" data-toggle='modal' data-target='#modalEditar'><i class="fas fa-pen"></i></button>
