@@ -32,6 +32,14 @@
                         <input type="text" class="form-control" id="cant_total" placeholder="Cantidad total"
                             [(ngModel)]="nuevoProd.cant_total">
                     </div>
+                    <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+                            <div class="input-group-text"><i class="fas fa-warehouse"></i></div>
+                        </div>
+                         <!--Cuadro de texto para agregar el nombre del -->
+                        <input type="text" class="form-control" id="cant_total" placeholder="Precio"
+                            [(ngModel)]="nuevoProd.precio">
+                    </div>
                     <!-- <div class="input-group mb-3">
                         <div class="input-group-prepend">
                             <div class="input-group-text"><i class="fas fa-warehouse"></i></div>
@@ -123,8 +131,15 @@
                     <div class="input-group-prepend">
                         <div class="input-group-text">Cantidad actual:</div>
                     </div>
-                    <input type="text" class="form-control" id="cantidadATemaEditar" placeholder="Nombre del tema"
+                    <input type="text" class="form-control" id="cantidadATemaEditar" placeholder="Cantidad actual"
                         [(ngModel)]="tmpProd.cant_actual">
+                </div>
+                <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+                        <div class="input-group-text">Precio:</div>
+                    </div>
+                    <input type="text" class="form-control" id="cantidadATemaEditar" placeholder="Precio"
+                        [(ngModel)]="tmpProd.precio">
                 </div>
             </div>
             <div class="modal-footer">

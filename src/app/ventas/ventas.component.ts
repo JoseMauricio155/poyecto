@@ -82,6 +82,29 @@ constructor(private datos:DatosServiceService, private router:Router, private ms
        this.inventario.subtotal='';
        this.ventas.total=0;
       
+       // this.msg.success("El Producto se guardo correctamente.");
+        this.detalles();
+      }else{
+        this.msg.error("El Producto no se ha podido guardar la venta.");
+      }
+    }, error => {
+      console.log(error);
+    });
+  }
+  detalles(){
+    this.datos.postdetalle(this.inventario).subscribe(resp => {
+      console.log(this.inventario);
+      
+      if(resp['result']=='ok'){
+       this.inventario.id_producto='';
+       this.inventario.nombre='';
+       this.inventario.cant_actual='';
+       this.inventario.cant_total='';
+       this.inventario.precio='';
+       this.inventario.piezas='';
+       this.inventario.subtotal='';
+       this.ventas.total=0;
+      
         this.msg.success("El Producto se guardo correctamente.");
         window.location.reload();
       }else{

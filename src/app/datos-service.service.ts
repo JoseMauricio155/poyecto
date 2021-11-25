@@ -119,6 +119,18 @@ export class DatosServiceService {
 
     return this.http.post(URL + "usuarios.php", formData, {headers:Headers});
   }
+  postdetalle(detalle){
+    let Headers = new HttpHeaders();
+    Headers = Headers.append('Authorization', this.cuenta.token);
+    let formData = new FormData();
+    formData.append('id_venta', detalle.id_venta);
+    formData.append('id_producto', detalle.id_producto);
+    formData.append('precio',detalle.precio);
+    formData.append('subtotal',detalle.subtotal);
+    formData.append('piezas',detalle.piezas);
+
+    return this.http.post(URL + "detalle.php", formData, {headers:Headers});
+  }
   postventas(ventas){
     let Headers = new HttpHeaders();
     Headers = Headers.append('Authorization', this.cuenta.token);
@@ -139,6 +151,7 @@ export class DatosServiceService {
 
     return this.http.put(URL + "usuarios.php", null, {headers: Headers, params: Params});
   }
+  
   deleteUsuarios(usuarios){
     let Headers = new HttpHeaders();
     Headers = Headers.append('Authorization', this.cuenta.token);

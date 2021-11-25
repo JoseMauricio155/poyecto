@@ -26,27 +26,27 @@ switch (JWT::verify($jwt, CONFIG::SECRET_JWT)) {
 //Si no entra ni en uno ni en dos pasa aquí abajo
 switch($_SERVER['REQUEST_METHOD']){
     case "GET":
-        if(isset($_GET['id'])){
-            $productos = new DataBase('inventario');
-            $where = array('id_producto'=>$_GET['id']);
+        if(isset($_GET['id_detalle'])){
+            $productos = new DataBase('detalle_venta');
+            $where = array('id_detalle'=>$_GET['id_detalle']);
             $res = $productos->Read($where);
         }else{
-            $productos = new DataBase('inventario');
+            $productos = new DataBase('detalle_venta');
             $res = $productos->ReadAll();
         }
         header("HTTP/1.1 200 OK");
         echo json_encode($res);
     break;
     case "POST":
-        if(isset($_POST['id'])&& isset($_POST['nombre'])&& isset($_POST['cant_total'])&& isset($_POST['cant_actual'])&& isset($_POST['precio'])){
+        if(isset($_POST['id_venta'])&& isset($_POST['id_producto'])&& isset($_POST['precio'])&& isset($_POST['subtotal'])&& isset($_POST['piezas'])){
             
-            $productos = new DataBase('inventario');
+            $productos = new DataBase('detalle_venta');
             $datos = array(
-                'id_producto'=>$_POST['id'],
-                'nombre'=>$_POST['nombre'],
-                'cant_total'=>$_POST['cant_total'],
-                'cant_actual'=>$_POST['cant_actual'],
-                'precio'=>$_POST['precio']
+                'id_venta'=>$_POST['id_venta'],
+                'id_producto'=>$_POST['id_producto'],
+                'precio'=>$_POST['precio'],
+                'subtotal'=>$_POST['subtotal'],
+                'piezas'=>$_POST['piezas']
             );
             try{
                 $reg = $productos->create($datos);
@@ -62,11 +62,11 @@ switch($_SERVER['REQUEST_METHOD']){
         echo json_encode($res);
     break;
     case "PUT":
-        if(isset($_GET['id']) && isset($_GET['nombre'])&& isset($_GET['cant_total'])&& isset($_GET['cant_actual'])&& isset($_GET['precio'])){
+        if(isset($_GET['id']) && isset($_GET['nombre'])&& isset($_GET['cant_total'])&& isset($_GET['cant_actual'])){
             
             $productos = new DataBase('inventario');
             $where = array('id_producto'=>$_GET['id']);
-            $datos = array('nombre'=>$_GET['nombre'],'cant_total'=>$_GET['cant_total'],'cant_actual'=>$_GET['cant_actual'],'precio'=>$_GET['precio']);
+            $datos = array('nombre'=>$_GET['nombre'],'nombre'=>$_GET['nombre'],'cant_total'=>$_GET['cant_total'],'cant_actual'=>$_GET['cant_actual']);
             $reg = $productos->update($datos,$where);
 
             $res = array("result"=>"ok","msg"=>"Se guardo el producto", "num"=>$reg);

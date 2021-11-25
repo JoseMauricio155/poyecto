@@ -35,7 +35,7 @@ constructor(private datos:DatosServiceService, private router:Router, private ms
   }
   agregarProducto(){
     this.nuevoProd.cant_actual=this.nuevoProd.cant_total;
-    if(this.nuevoProd.id_producto == '' && this.nuevoProd.nombre == ''&& this.nuevoProd.cant_actual == ''&& this.nuevoProd.cant_total == ''){
+    if(this.nuevoProd.id_producto == '' && this.nuevoProd.nombre == ''&& this.nuevoProd.cant_actual == ''&& this.nuevoProd.cant_total == ''&& this.nuevoProd.precio == ''){
       this.msg.error("Los campos Id, Nombre del Producto,cant_total son obligatorios");
       return;
     }
@@ -47,8 +47,6 @@ constructor(private datos:DatosServiceService, private router:Router, private ms
         this.nuevoProd.nombre = '';
         this.nuevoProd.cant_total = '';
         this.nuevoProd.cant_actual = '';
-        this.nuevoProd.precio = '';
-
         this.msg.success("El Producto se guardo correctamente.");
       }else{
         this.msg.error("El Producto no se ha podido guardar.");
@@ -67,6 +65,7 @@ constructor(private datos:DatosServiceService, private router:Router, private ms
         this.inventario[i].nombre = this.tmpProd.nombre;
         this.inventario[i].cant_total = this.tmpProd.cant_total;
         this.inventario[i].cant_actual = this.tmpProd.cant_actual;
+        this.inventario[i].precio = this.tmpProd.precio;
         this.msg.success("El Producto se guardo correctamente.");
       }else{
         this.msg.error("El Producto no se ha podido guardar.");
