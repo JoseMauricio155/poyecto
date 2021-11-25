@@ -52,6 +52,14 @@ export class DatosServiceService {
     
     return this.http.get(URL + "inventario.php", {headers:Headers});
   }
+   getProductosventas(id){
+    let Headers = new HttpHeaders();
+    Headers = Headers.append('Authorization', this.cuenta.token);
+    let Params = new HttpParams();
+    Params = Params.append('id', id);
+    
+    return this.http.get(URL + "inventario.php",{headers: Headers, params: Params});
+  }
   
   //localstorage en cache de navegador
   //session mientras no se cierre
