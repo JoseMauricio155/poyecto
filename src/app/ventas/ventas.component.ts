@@ -34,7 +34,7 @@ constructor(private datos:DatosServiceService, private router:Router, private ms
       this.nuevoProdee=resp;
       this.nuevoProdee.piezas=this.piezass;
       this.nuevoProdee.subtotal=(this.nuevoProdee.precio*this.nuevoProdee.piezas);
-      this.ventas.total=(this.ventas.total+this.nuevoProdee.subtotal);
+      this.ventas.total=Number(Number(this.ventas.total)+Number(this.nuevoProdee.subtotal));
       this.inventario.push((this.nuevoProdee));
       console.log(resp);
       console.log("yeaaah");
