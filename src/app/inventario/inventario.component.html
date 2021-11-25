@@ -57,6 +57,7 @@
                         <th>Nombre</th>
                         <th>Cantidad total</th>
                         <th>Cantidad actual</th>
+                        <th>Precio</th>
                         <th></th>
                     </tr>
                 </thead>
@@ -66,6 +67,7 @@
                         <td >{{producto.nombre}}</td>
                         <td>{{producto.cant_total}}</td>
                         <td >{{producto.cant_actual}}</td>
+                        <td >{{producto.precio}}</td>
                         <td class="text-right">
                             <button class="btn btn-primary btn-sm" *ngIf="level=='A'"
                                 (click)="temporalProducto(producto)" data-toggle='modal' data-target='#modalEditar'><i class="fas fa-pen"></i></button>

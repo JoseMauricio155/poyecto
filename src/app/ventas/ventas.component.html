@@ -13,7 +13,14 @@
               <input type="text" class="form-control" [(ngModel)]="id_proo">
 
             </div>
-            
+            <div class="input-group">
+              <div class="input-group-prepend">
+                <span class="input-group-text" id="">Piezas</span>
+              </div>
+              <input type="text" class="form-control" [(ngModel)]="piezass">
+
+            </div>
+            <h3>{{piezass}}</h3>
       </div>
       <div class="col-4"><button type="button" class="btn btn-success" (click)="llenarInventario()">Agregar <i class="fas fa-shopping-cart"></i></button></div>
   </div>
@@ -29,8 +36,9 @@
                     <tr>
                         <th>Id</th>
                         <th>Nombre</th>
-                        <th>Cantidad total</th>
-                        <th>Cantidad actual</th>
+                        <th>Piezas</th>
+                        <th>Precio</th>
+                        <th>Subtotal</th>
                         <th></th>
                     </tr>
                 </thead>
@@ -38,8 +46,9 @@
                   <tr *ngFor="let producto of inventario">
                     <td >{{producto.id_producto}}</td>
                     <td >{{producto.nombre}}</td>
-                    <td>{{producto.cant_total}}</td>
-                    <td >{{producto.cant_actual}}</td>
+                    <td >{{producto.piezas}}</td>
+                    <td >{{producto.precio}}</td>
+                    <td>{{producto.subtotal}}</td>
                         <td class="text-right">
                             <button class="btn btn-primary btn-sm" *ngIf="level=='A'"
                                 (click)="temporalProducto(producto)" data-toggle='modal' data-target='#modalEditar'><i class="fas fa-pen"></i></button>
@@ -59,6 +68,24 @@
 </div>
 <h3>{{nuevoProdee.id_producto}}</h3>
 <h3>loco</h3>
+
+<h3>
+  <div class="row">
+    <div class="col-4"></div>
+    <div class="col-4"><div class="input-group">
+      <div class="input-group-prepend">
+        <span class="input-group-text" id="">Total</span>
+      </div>
+      <input type="text" class="form-control" [(ngModel)]="ventas.total" disabled>
+    
+    </div></div>
+    <div class="col-4">
+
+      <button type="button" class="btn btn-success" (click)="vender()">Hacer venta</button>
+    </div>
+    
+    </div>
+</h3>
 <!-- Modal Para Editar -->
 <div class="modal fade" id="modalEditar" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle"
     aria-hidden="true">
@@ -186,4 +213,5 @@
             </div>
         </div>
     </div>
+    
 </div>

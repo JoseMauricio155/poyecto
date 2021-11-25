@@ -14,8 +14,8 @@ productoES=0;
 inventario:any;
 level:String;
 nuevaOpera:any={id_producto:'',tipo:'',cantidad:0};
-nuevoProd={id_producto:'',nombre:'',cant_total:'',cant_actual:''};
-tmpProd:any={id_producto:'',nombre:'',cant_total:'',cant_actual:''}; 
+nuevoProd={id_producto:'',nombre:'',cant_total:'',cant_actual:'',precio:''};
+tmpProd:any={id_producto:'',nombre:'',cant_total:'',cant_actual:'',precio:''}; 
 operaa:any;
 constructor(private datos:DatosServiceService, private router:Router, private msg:ToastrService) { }
 
@@ -47,6 +47,8 @@ constructor(private datos:DatosServiceService, private router:Router, private ms
         this.nuevoProd.nombre = '';
         this.nuevoProd.cant_total = '';
         this.nuevoProd.cant_actual = '';
+        this.nuevoProd.precio = '';
+
         this.msg.success("El Producto se guardo correctamente.");
       }else{
         this.msg.error("El Producto no se ha podido guardar.");

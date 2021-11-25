@@ -72,6 +72,7 @@ export class DatosServiceService {
     formData.append('nombre', Producto.nombre);
     formData.append('cant_total', Producto.cant_total);
     formData.append('cant_actual', Producto.cant_actual);
+    formData.append('precio', Producto.precio);
 
     return this.http.post(URL + "inventario.php", formData, {headers:Headers});
   }
@@ -85,6 +86,8 @@ export class DatosServiceService {
     Params = Params.append('nombre', Producto.nombre);
     Params = Params.append('cant_total', Producto.cant_total);
     Params = Params.append('cant_actual', Producto.cant_actual);
+    Params = Params.append('precio', Producto.precio);
+    
 
     return this.http.put(URL + "inventario.php", null, {headers: Headers, params: Params});
   }
@@ -115,6 +118,14 @@ export class DatosServiceService {
     formData.append('nombre',usuarios.nombre);
 
     return this.http.post(URL + "usuarios.php", formData, {headers:Headers});
+  }
+  postventas(ventas){
+    let Headers = new HttpHeaders();
+    Headers = Headers.append('Authorization', this.cuenta.token);
+    let formData = new FormData();
+    formData.append('total', ventas.total);
+
+    return this.http.post(URL + "ventas.php", formData, {headers:Headers});
   }
   putUsuarios(usuarios){
     let Headers = new HttpHeaders();

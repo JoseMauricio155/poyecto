@@ -15,11 +15,14 @@ inventario:any=[];
 level:String;
 nuevaOpera:any={id_producto:'',tipo:'',cantidad:0};
 nuevoProd={id_producto:'',nombre:'',cant_total:'',cant_actual:''};
-nuevoProdee:any={id_producto:'',nombre:'',cant_total:'',cant_actual:'',precio:''};
+nuevoProdee:any={id_producto:'',nombre:'',cant_total:'',cant_actual:'',precio:'',piezas:'',Subtotal:''};
 nuevoProdeer:any={id_producto:'',nombre:'',cant_total:'',cant_actual:'',precio:''};
-tmpProd:any={id_producto:'',nombre:'',cant_total:'',cant_actual:''}; 
+tmpProd:any={id_producto:'',nombre:'',cant_total:'',cant_actual:'',precio:'',piezas:'',Subtotal:''}; 
 operaa:any;
-id_proo:any=[];
+id_proo:any;
+piezass=0;
+sub=0;
+ventas:any={total:''};
 constructor(private datos:DatosServiceService, private router:Router, private msg:ToastrService) { }
 
   ngOnInit(): void {
@@ -28,10 +31,12 @@ constructor(private datos:DatosServiceService, private router:Router, private ms
   }
   llenarInventario(){
     this.datos.getProductosventas(this.id_proo).subscribe(resp => {
-      
-      this.inventario.push((resp));
+      this.nuevoProdee=resp;
+      this.nuevoProdee.piezas=this.piezass;
+      this.nuevoProdee.subtotal=(this.nuevoProdee.precio*this.nuevoProdee.piezas);
+      this.ventas.total=(this.ventas.total+this.nuevoProdee.subtotal);
+      this.inventario.push((this.nuevoProdee));
       console.log(resp);
-      console.log("yeaaah");
       console.log("yeaaah");
       console.log(this.inventario);
       //console.log(this.nuevoProdee);
@@ -56,6 +61,29 @@ constructor(private datos:DatosServiceService, private router:Router, private ms
         this.nuevoProd.cant_total = '';
         this.nuevoProd.cant_actual = '';
         this.msg.success("El Producto se guardo correctamente.");
+      }else{
+        this.msg.error("El Producto no se ha podido guardar.");
+      }
+    }, error => {
+      console.log(error);
+    });
+  }
+  vender(){
+    this.datos.postventas(this.ventas).subscribe(resp => {
+      console.log(this.ventas.total);
+      
+      if(resp['result']=='ok'){
+       this.inventario.id_producto='';
+       this.inventario.nombre='';
+       this.inventario.cant_actual='';
+       this.inventario.cant_total='';
+       this.inventario.precio='';
+       this.inventario.piezas='';
+       this.inventario.subtotal='';
+       this.ventas.total=0;
+      
+        this.msg.success("El Producto se guardo correctamente.");
+        window.location.reload();
       }else{
         this.msg.error("El Producto no se ha podido guardar.");
       }
@@ -168,17 +196,12 @@ constructor(private datos:DatosServiceService, private router:Router, private ms
     }
   }
   confirmarEliminar(){
-    this.datos.deleteProductos(this.tmpProd).subscribe(resp => {
-      if(resp['result']=='ok'){
         let i = this.inventario.indexOf( this.inventario.find( producto => producto.id_producto == this.tmpProd.id_producto ));
+        this.ventas.total=this.ventas.total-this.tmpProd.subtotal;
         this.inventario.splice(i,1);
         this.msg.success("El Producto se elimino correctamente.");
-      }else{
-        this.msg.error("El Producto no se ha podido guardar.");
-      }
-    }, error => {
-      console.log(error);
-    });
+     
+    
   }
 
 }
